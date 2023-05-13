@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.sql.Date;
 import java.time.temporal.ChronoUnit;
 
-public class App {
+public class App{
     public static void main(String[] args) throws Exception {
         Connection connection = null;
         Scanner scanner = new Scanner(System.in);
