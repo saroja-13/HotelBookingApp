@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.sql.Date;
 import java.time.temporal.ChronoUnit;
 
-public class App{
+public class App {
     public static void main(String[] args) throws Exception {
         Connection connection = null;
         Scanner scanner = new Scanner(System.in);
@@ -24,14 +24,20 @@ public class App{
         sqlconnect();
 
         while (true) {
-            System.out.println("\033[37mWelcome to HOTEL ORANGE!");
-            System.out.println("\033[32m1. Customer Registration");
-            System.out.println("\033[36m2. Customer login");
-            System.out.println("\033[33m3. Employee login");
-            System.out.println("\033[34m4. Admin Login");
-            System.out.println("\033[31m5. Exit");
+            System.out.println("\033[37m+---------------------------------+");
+            System.out.println("\033[37m|      Welcome to HOTEL ORANGE!   |");
+            System.out.println("\033[37m+---------------------------------+");
+            System.out.println("\033[32m| 1. Customer Registration        |");
+            System.out.println("\033[32m| 2. Customer login               |");
+            System.out.println("\033[32m| 3. Employee login               |");
+            System.out.println("\033[32m| 4. Admin Login                  |");
+            System.out.println("\033[32m| 5. Exit                         |");
+            System.out.println("\033[37m+---------------------------------+");
+            System.out.println(" ");
             System.out.print("\033[38;2;255;165;0mEnter your choice: ");
+            
             int choice = scanner.nextInt();
+
             scanner.nextLine(); // Consume newline
             switch (choice) {
                 case 1:
@@ -55,7 +61,7 @@ public class App{
                     break;
 
                 case 5:
-                    System.out.println("\033[38;2;255;105;180mTHANK YOU!!!!!!!!\033[0m");
+                    System.out.println("\033[38;2;255;105;180mTHANK YOU :) !!!!!!!!\033[0m");
                     return;
                 default:
                     System.out.println("\u001B[31mInvalid choice!\u001B[0m");
@@ -65,7 +71,10 @@ public class App{
     }
 
     private static void customerRegistration(Connection conn, Scanner scanner) throws SQLException {
-        System.out.println("\033[33mCustomer Registration");
+        System.out.println("+----------------------------------+");
+        System.out.println("\033[33m|        Customer Registration     |");
+        System.out.println("\033[38;2;255;165;0m+----------------------------------+");
+        System.out.println(" ");
         System.out.print("\033[37mEnter Name: ");
         String Customer_Name = scanner.nextLine();
         System.out.print("\033[37mEnter Customer_id: ");
@@ -74,6 +83,7 @@ public class App{
         int Customer_Phonenumber = Integer.parseInt(scanner.nextLine());
         System.out.print("\033[37mEnter password: ");
         String Password = scanner.nextLine();
+        System.out.println(" ");
         try {
             conn = sqlconnect();
             String sql = "INSERT INTO Customer(Customer_Name, Customer_id, Customer_Phonenumber, Password) VALUES (?, ?, ?, ?)";
@@ -109,6 +119,7 @@ public class App{
         LocalDate outdate = LocalDate.parse(scanner.nextLine());
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String Outdate = outdate.format(formatter);
+        System.out.println(" ");
         String[] booking = new String[4];
 
         booking[0] = type;
@@ -123,6 +134,7 @@ public class App{
         System.out.println("Payment Method:");
         System.out.println("1.UPI Payment");
         System.out.println("2.Cash");
+        System.out.println(" ");
         int method = Integer.parseInt(scanner.nextLine());
 
         if (method == 1) {
@@ -144,10 +156,6 @@ public class App{
         } else {
             System.out.println(" You need come to hotel!!!");
         }
-        // booking[0] = type;
-        // booking[1] = String.valueOf(guests);
-        // booking[2] = Indate;
-        // booking[3] = Outdate;
         totalPrice = calculatePrice(booking[0], booking[1], booking[2], booking[3]);
         try {
             Connection connection = sqlconnect();
@@ -179,8 +187,6 @@ public class App{
 
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
 
-        // int a = Integer.parseInt(outdate[2]) - Integer.parseInt(indate[2]);
-        // System.out.println("No Of Days:" + a);
         try {
             Connection connection = sqlconnect();
             Statement statement = connection.createStatement();
@@ -234,8 +240,9 @@ public class App{
     }
 
     private static String customerLogin(Connection conn, Scanner scanner) throws SQLException, ParseException {
-
-        System.out.println("Customer login");
+        System.out.println("+----------------+");
+        System.out.println("| Customer login |");
+        System.out.println("+----------------+");
         System.out.print("Enter Customer_id: ");
         String Customer_id = scanner.nextLine();
         System.out.print("Enter password: ");
@@ -273,11 +280,15 @@ public class App{
     }
 
     private static void employeeLogin(Connection conn, Scanner scanner) throws SQLException {
-        System.out.println("\u001B[35mEmployee login");
+        System.out.println("+-----------------+");
+        System.out.println("\u001B[35m| Employee login  |");
+        System.out.println("+-----------------+");
+        System.out.println(" ");
         System.out.print("\u001B[33mEnter Employee_id: ");
         String Employee_id = scanner.nextLine();
         System.out.print("\u001B[36mEnter password: ");
         String password = scanner.nextLine();
+        System.out.println(" ");
         try {
             conn = sqlconnect();
             String sql = "SELECT * FROM Employee WHERE Employee_id ='" + Employee_id + "'AND Password ='" + password
@@ -299,7 +310,10 @@ public class App{
     private static void adminLogin(Connection conn, Scanner scanner) throws SQLException {
         PreparedStatement pstmt;
         ResultSet rs;
-        System.out.println("\u001B[35mAdmin login");
+        System.out.println("+-----------------+");
+        System.out.println("\u001B[35m|   Admin Login   |");
+        System.out.println("+-----------------+");
+        System.out.println(" ");
         System.out.print("\u001B[33mEnter Admin_id: ");
         String Admin_id = scanner.nextLine();
         System.out.print("\u001B[36mEnter password: ");
@@ -315,29 +329,40 @@ public class App{
                 System.out.println("\u001B[32mLogin successful!!!");
                 System.out.println("\u001B[36mAdmin Access");
                 System.out.println("");
-                System.out.println("\u001B[33m1. Employee access");
-                System.out.println("\u001B[36m2. Customer Booking Details");
+                System.out.println("+-----------------------------+");
+                System.out.println("\u001B[33m| 1. Employee access          |");
+                System.out.println("\u001B[36m| 2. Customer Booking Details |");
+                System.out.println("+-----------------------------+");
+
                 int option = Integer.parseInt(scanner.nextLine());
                 if (option == 1) {
-                    System.out.println("\u001B[36ma. Employee Details");
-                    System.out.println("\u001B[36mb. Register employee");
-                    System.out.println("\u001B[35mc. Remove employee");
+                    System.out.println("+-----------------------------+");
+                    System.out.println("\u001B[36m| a. Employee Details        |");
+                    System.out.println("\u001B[36m| b. Register Employee       |");
+                    System.out.println("\u001B[36m| c. Remove Employee         |");
+                    System.out.println("+-----------------------------+");
                     System.out.println("\u001B[37m Choice: ");
                     String choice = scanner.nextLine();
-                    System.out.println("");
+                    System.out.println(" ");
                     try {
                         if (choice.equals("a")) {
+                            System.out.println("+-------------------+");
+                            System.out.println("\u001B[36m|  Employee Details |");
+                            System.out.println("+-------------------+");
                             statement = conn.createStatement();
                             resultSet = statement.executeQuery("SELECT * FROM Employee");
                             while (resultSet.next()) {
                                 System.out.println(resultSet.getInt(1) + "\t" + resultSet.getString(2) + "\t"
                                         + resultSet.getInt(3) + "\t" + resultSet.getString(4) + "\t"
                                         + resultSet.getString(5)
-                                        + "\t" + resultSet.getInt(6) + "\t" + resultSet.getDate(7).toLocalDate());
+                                        + "\t" + resultSet.getInt(6) + "\t" + resultSet.getDate(7).toLocalDate() + "\t"
+                                        + resultSet.getString(8));
                             }
-
+                            resultSet.close();
                         } else if (choice.equals("b")) {
-                            System.out.println("\u001B[36mRegistering Employee");
+                            System.out.println("+---------------------------+");
+                            System.out.println("\u001B[36m|     Registering Employee     |");
+                            System.out.println("+---------------------------+");
                             System.out.println(" ");
                             System.out.print("\033[37mEnter Employee_id: ");
                             int Employee_id = Integer.parseInt(scanner.nextLine());
@@ -345,44 +370,46 @@ public class App{
                             String Employee_Name = scanner.nextLine();
                             System.out.print("\033[37mEnter Phonenumber: ");
                             int Employee_Phonenumber = Integer.parseInt(scanner.nextLine());
-                            System.out.println("\033[37mEnter Mail_id:");
+                            System.out.print("\033[37mEnter Mail_id:");
                             String Employee_Mail = scanner.nextLine();
                             System.out.print("\033[37mEnter password: ");
                             String Password = scanner.nextLine();
-                            System.out.println("\033[37mSalary:");
+                            System.out.print("\033[37mSalary:");
                             int Salary = Integer.parseInt(scanner.nextLine());
-                            System.out.println("\033[37mDate of Joining:");
+                            System.out.print("\033[37mDate of Joining:");
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                             String Date_of_joining = scanner.nextLine();
-
-                            String query = "INSERT INTO Employee(Employee_id, Employee_Name, Employee_Phonenumber, Employee_Mail, Password, Salary, Date_of_joining) VALUES ('"
-                                    + Employee_id + "','" + Employee_Name + "','" + Employee_Phonenumber + "','"
-                                    + Employee_Mail
-                                    + "','"
-                                    + Password + "','" + Salary + "','" + Date_of_joining + "')";
+                            System.out.print("Role:");
+                            String Role = scanner.nextLine();
 
                             System.out.printf("|%-10s| %-21s| %-21s| %-21s| %-21s| %-21s| %-21s|\n", "Employee_id",
                                     "Employee_Name", "Employee_Phonenumber",
-                                    "Employee_Mail", "Password", "Salary", "Joining_date");
+                                    "Employee_Mail", "Password", "Salary", "Joining_date", "Role");
                             System.out.println("");
                             System.out.printf("|%-11s| %-21s| %-21s| %-21s| %-21s| %-21s| %-21s|\n", Employee_id,
                                     Employee_Name,
                                     Employee_Phonenumber,
-                                    Employee_Mail, Password, Salary, Date_of_joining);
+                                    Employee_Mail, Password, Salary, Date_of_joining, Role);
 
                             try {
                                 Statement stmt = conn.createStatement();
+                                String query = "INSERT INTO Employee (Employee_id, Employee_Name, Employee_Phonenumber, Employee_Mail, Password, Salary, Date_of_joining, Role) VALUES ('"
+                                        + Employee_id + "','" + Employee_Name + "','" + Employee_Phonenumber + "','"
+                                        + Employee_Mail + "','"
+                                        + Password + "','" + Salary + "','" + Date_of_joining + "','" + Role + "')";
                                 stmt.execute(query);
                             } catch (Exception e) {
                                 System.out.println(e);
                             }
 
                         } else if (choice.equals("c")) {
-                            System.out.println("Removing Employee");
+                            System.out.println("+--------------------+");
+                            System.out.println("\033[37m| Removing Employee  |");
+                            System.out.println("+--------------------+");
                             System.out.println("");
                             System.out.println("Choose from the Table");
                             System.out.println("");
-                            statement = conn.createStatement();
+
                             resultSet = statement.executeQuery("SELECT * FROM Employee");
                             while (resultSet.next()) {
                                 System.out.println(resultSet.getInt(1) + "\t" + resultSet.getString(2) + "\t"
@@ -390,9 +417,12 @@ public class App{
                                         + resultSet.getString(5)
                                         + "\t" + resultSet.getInt(6) + "\t" + resultSet.getDate(7).toLocalDate());
                             }
+                            resultSet.close();
                             System.out.println("");
-                            System.out.println("Employee_id");
-                            System.out.println("EMployee_Name");
+                            System.out.println("+-----------------+");
+                            System.out.println("\033[37m| Employee_id     |");
+                            System.out.println("\033[37m| Employee_Name   |");
+                            System.out.println("+-----------------+");
                             System.out.println("");
                             System.out.print("choice:");
                             choice = scanner.nextLine();
@@ -421,57 +451,33 @@ public class App{
                         // Handle the exception or provide feedback to the user
                     }
                 } else if (option == 2) {
-                    String Room_type;
-                    String BD = "SELECT * FROM Booking_Details";
-                    pstmt = conn.prepareStatement(BD);
-                    rs = pstmt.executeQuery();
-                    while (rs.next()) {
-                        String Customer_id = rs.getString("Customer_id");
-                        Date Check_in = rs.getDate("Check_in");
-                        Date Check_out = rs.getDate("Check_out");
-                        int guests = rs.getInt("No_of_guests");
-                        Room_type = rs.getString("Room_type");
-                        int Price_per_day = rs.getInt("Price_per_day");
-                        System.out.println("");
-                        System.out.println("\u001B[35mBooking Details");
-                        System.out.println("");
-                        System.out.printf("\u001B[33m|%-10s| %-21s| %-21s| %-21s| %-21s| %-21s|\n", "Customer_id",
-                                "Check_in",
-                                "Check_out",
-                                "No_of_Guests", "Room_type", "Room_Price");
+                    System.out.println(" ");
+                    System.out.println("+-----------------+");
+                    System.out.println("\033[37m| Booking Details |");
+                    System.out.println("+-----------------+");
+                    resultSet = statement.executeQuery("SELECT * FROM Booking_Details");
+                    while (resultSet.next()) {
+                        System.out.println(resultSet.getString(1) + "\t" + resultSet.getDate(2) + "\t"
+                                + resultSet.getDate(3) + "\t" + resultSet.getInt(4) + "\t"
+                                + resultSet.getString(5)
+                                + "\t" + resultSet.getInt(6));
 
-                        System.out.println("");
-
-                        System.out.printf("\u001B[33m|%-11s| %-21s| %-21s| %-21s| %-21s| %-21s|\n", Customer_id,
-                                Check_in,
-                                Check_out,
-                                guests, Room_type, Price_per_day);
                     }
+                    System.out.println(" ");
+                    System.out.println("+---------+");
+                    System.out.println("\033[37m|  Rooms  |");
+                    System.out.println("+---------+");
                     String Room = "Select * from Rooms;";
-                    pstmt = conn.prepareStatement(Room);
-                    rs = pstmt.executeQuery();
-                    while (rs.next()) {
+                    resultSet = statement.executeQuery("SELECT * FROM Rooms");
 
-                        int Rooms_id = rs.getInt("Rooms_id");
-                        Room_type = rs.getString("Room_type");
-                        int Room_sharing = rs.getInt("Room_sharing");
-                        int Availability = rs.getInt("Availability");
-                        System.out.println("");
-                        System.out.println("\u001B[35mRoom Details");
-                        System.out.println("");
-                        System.out.printf("\u001B[34m|%-10s| %-21s| %-21s| %-21s|\n", "Room_id", "Room_type",
-                                "Room_sharing",
-                                "Availability");
+                    while (resultSet.next()) {
+                        System.out.println(resultSet.getInt(1) + "\t" + resultSet.getString(2) + "\t"
+                                + resultSet.getInt(3) + "\t" + resultSet.getInt(4) + "\t"
+                                + resultSet.getInt(5));
 
-                        System.out.println("");
-                        System.out.printf("\u001B[34m|%-11s| %-21s| %-21s| %-21s|\n", Rooms_id, Room_type,
-                                Room_sharing,
-                                Availability);
-                        break;
                     }
-                    rs.close();
-                    pstmt.close();
-                    conn.close();
+                    resultSet.close();
+
                 } else {
                     System.out.println("Invalid Id or password");
                 }
